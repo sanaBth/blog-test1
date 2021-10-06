@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PostService } from '../service/post.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private localStorageService : PostService) { }
 
+  public tablePost =[];
   ngOnInit(): void {
+   //console.log(this.localStorageService.getData());
+    const tablePost = this.localStorageService.getData();
+
+   console.log(tablePost);
   }
 
 }
