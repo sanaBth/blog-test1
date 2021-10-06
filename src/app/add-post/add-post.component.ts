@@ -17,7 +17,7 @@ export class AddPostComponent implements OnInit {
   public categorie: string = '';
   public description: string = '';
   public date : string = '';
-
+  public  lesposts :any;
   ngOnInit(): void {
   }
 
@@ -32,12 +32,15 @@ export class AddPostComponent implements OnInit {
  
   public unpost = {titre: this.titre, categorie: this.categorie, description: this.description ,
     date : this.date}
-
+    
   public addPost(){
-    this.unpost.categorie = this.categorie
-    this.unpost.description = this.description
-    this.unpost.titre = this.titre
-    this.unpost.date = this.date
+    this.unpost.categorie = this.postForm.controls.categorie.value
+    this.unpost.description = this.postForm.controls.description.value
+    this.unpost.titre = this.postForm.controls.titre.value
+    this.unpost.date = this.postForm.controls.date.value
     this.localStorageService.setItem('Posts',JSON.stringify(this.unpost))
+    
+    //const array = JSON.parse(this.localStorageService.getData(this.unpost));
+    console.log(this.localStorageService.setItem('Posts',JSON.stringify(this.unpost)));
   }
 }

@@ -10,12 +10,13 @@ export class HomeComponent implements OnInit {
 
   constructor(private localStorageService : PostService) { }
 
-  public tablePost =[];
+  public tablePost :any;
   ngOnInit(): void {
    //console.log(this.localStorageService.getData());
+    //const tablePost = JSON.parse(this.localStorageService.getData());
     const tablePost = this.localStorageService.getData();
-
    console.log(tablePost);
+   
   }
 
 }
