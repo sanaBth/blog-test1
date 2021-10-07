@@ -3,8 +3,8 @@ export class Post
     titre : string;
     description : string;
     categorie : string;
-    date:string;
-    constructor ( titre : string,  description : string, categorie : string, date : string)
+    date:Date;
+    constructor ( titre : string,  description : string, categorie : string, date : Date)
   {
     this.titre = titre;
     this.description = description;
@@ -12,4 +12,5 @@ export class Post
     this.date =date;
     
   }
+
 }

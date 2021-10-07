@@ -5,37 +5,47 @@ import { Post } from '../model/post';
   providedIn: 'root'
 })
 export class PostService {
-  public postArray : Post[] = [
-    {titre:"", categorie:"",description:"",date:""},
+  public posts : Post[] = [
+   
   ]
   postA : any;
   constructor() { }
 
-  public setItem(key: string, value: string) 
-  {
-    localStorage.setItem(key, value);
-  }
+    public storeOnLocalStorage(post: Post): void 
+    {
+      // get array of tasks from local storage
+      this.posts = JSON.parse(localStorage.getItem('Posts') || '[]');
+      // push new task to array
+      this.posts.push(post);
+      // insert updated array to local storage
+      localStorage.setItem('Posts',JSON.stringify(this.posts));
+      //console.log(localStorage.getItem('Posts') || 'LocaL storage is empty');
+    }
+    getPosts()
+    {
+      /* const posts = JSON.parse(localStorage.getItem('Posts')) || [];*/
+      return JSON.parse(localStorage.getItem('Posts') || '[]');
 
-  public storeOnLocalStorage(taskTitle: string): void {
-          
-    // get array of tasks from local storage
-    this.postA = localStorage.getItem('Posts') || [];
-    // push new task to array
-    this.postArray.push(this.postA);
-    // insert updated array to local storage
-    localStorage.setItem('Posts', this.postA);
-    //console.log(localStorage.getItem('Posts') || 'LocaL storage is empty');
-}
-  getData()
-  {
-   /* const posts = JSON.parse(localStorage.getItem('Posts')) || [];*/
-  return localStorage.getItem('Posts');
-    
- }
+    }
+    getonePost(i : number)
+    {
+      /* const posts = JSON.parse(localStorage.getItem('Posts')) || [];*/
+      this.posts =JSON.parse(localStorage.getItem('Posts') || '[]');
+      return this.posts[i]
+    }
+
+    public removeItem(i:number) 
+    {
+      this.posts =JSON.parse(localStorage.getItem('Posts') || '[]')
+      this.posts.splice(i,1)
+      localStorage.setItem('Posts',JSON.stringify(this.posts));
+    }
+
+    public updateItem(i:number,updatePost :Post) 
+    {
+      this.posts =JSON.parse(localStorage.getItem('Posts') || '[]')
+      this.posts.splice(i,1,updatePost);
+      localStorage.setItem('Posts',JSON.stringify(this.posts));
+    }
  
-  public removeItem(key:string) {
-    localStorage.removeItem(key);
-  }
-
-
 }

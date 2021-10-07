@@ -3,7 +3,7 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <h2>Nouveau post</h2>
+                <h2>{{actionPage}}</h2>
                 <p>Ceéer vos article à travers ce formulaier, Exprimez vous et écrivez ce que vous vient a vos esprits!</p>
                     <p> Go ahead</p>
                 
@@ -11,7 +11,7 @@
                     
                     <form [formGroup]="postForm" >
                         <div class="form-floating mt-3" >
-                            <input class="form-control"   id="name" type="text" placeholder="Titre..." name="titre"  formControlName="titre" />
+                            <input class="form-control" id="name" type="text" placeholder="Titre..." name="titre"  formControlName="titre" />
                             <label for="name">Titre</label>
                             <div class="text-info" *ngIf ="postForm.controls.titre && postForm.controls.titre.invalid && postForm.controls.titre.touched">Ce champs est obligatoire</div>
                         </div>
@@ -31,23 +31,15 @@
                               <option>Culture</option>
                             </select> 
                             
-                            <div class="text-info" *ngIf ="postForm.controls.categorie && postForm.controls.categorie.invalid && postForm.controls.categorie.touched">Ce champs est obligatoire</div>
-                        
+                            <div class="text-info" *ngIf ="postForm.controls.categorie && postForm.controls.categorie.invalid && postForm.controls.categorie.touched">Ce champs est obligatoire</div>                     
                           </div>
-                      
-                        <div class="form-floating mt-3">
-                            
-                            <input class="form-control" id="date"  type="date"  formControlName="date"/>
-                            <label for="date">Date</label>
-                            <div class="text-info" *ngIf ="postForm.controls.date && postForm.controls.date.invalid && postForm.controls.date.touched">Ce champs est obligatoire</div>
-                        
-                        </div>
-                       
+
                         <br />
                        <div class="text-center">
                         <!-- Submit Button-->
                         
-                        <button class="align-center btn btn-primary" type="submit" (click)="addPost()">Ajouter</button>
+                        <button class="align-center btn btn-primary" type="submit" (click)="savePost()">{{actionPage}}</button>
+                       
                     </div>
                     </form>
                 </div>

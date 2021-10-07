@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Post } from '../model/post';
 import { PostService } from '../service/post.service';
 
 @Component({
@@ -9,17 +10,19 @@ import { PostService } from '../service/post.service';
 export class HomeComponent implements OnInit {
 
   constructor(private _localStorageService : PostService) { }
-  public queryResult :any =[];
-  public tablePost :any;
-  postA : any;
-  ngOnInit(): void {
-   //console.log(this.localStorageService.getData());
-    //const tablePost = JSON.parse(this.localStorageService.getData());
-   // const result=JSON.parse(this._localStorageService.getData());
-   //this.postA = JSON.parse(this._localStorageService.getData('Posts')) ;
-   
-   console.log(this.postA);
-   
-  }
+  public posts : Post[] =[];
 
+  ngOnInit(): void {
+   this.refresh();
+  }
+  refresh ()
+  {
+    this.posts=this._localStorageService.getPosts();
+  }
+ 
+  supprimer(i:number)
+  {
+    this._localStorageService.removeItem(i);
+    this.refresh()
+  }
 }

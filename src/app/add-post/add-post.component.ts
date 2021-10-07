@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup,  FormControl, Validators} from '@angular/forms';
 import { Post } from '../model/post';
 import { PostService } from '../service/post.service';
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-post',
@@ -11,49 +12,50 @@ import { PostService } from '../service/post.service';
 export class AddPostComponent implements OnInit {
 
  
-  constructor(private localStorageService : PostService) { }
-  public post = Post ;
-  public titre: string = '';
-  public categorie: string = '';
-  public description: string = '';
-  public date : string = '';
-  public  lesposts :any;
-  postA : any;
- public postArray : Post[] = [
-    {titre:"", categorie:"",description:"",date:""},
-  ]
-  ngOnInit(): void {
-    
+  constructor(private localStorageService : PostService, private route: ActivatedRoute,
+    private router: Router ) { }
+
+  i : number ; 
+  postForm : FormGroup;
+  currentPost : Post=new Post( '','','',new Date()  );
+  actionPage : string ='New post';
+
+  ngOnInit(): void 
+  {
+    this.i = this.route.snapshot.params.i;
+    console.log(this.i);
+    if(this.i)
+    {
+      this.actionPage='Edit post'
+      this.currentPost = this.localStorageService.getonePost(this.i)
+      console.log(this.currentPost);
+    }
+    this.postForm = new FormGroup
+    ({
+      titre: new FormControl(this.currentPost.titre,Validators.required),
+      description: new FormControl(this.currentPost.description,Validators.required),
+      categorie : new FormControl(this.currentPost.categorie,Validators.required),
+      
+    })
+  }
+
+  public savePost()
+  {
+    this.currentPost.categorie = this.postForm.controls.categorie.value
+    this.currentPost.description = this.postForm.controls.description.value
+    this.currentPost.titre = this.postForm.controls.titre.value
+    this.currentPost.date = new Date();
+    if(this.actionPage == 'New post')
+    {
+      this.localStorageService.storeOnLocalStorage(this.currentPost);
+    }
+    else
+    {
+      this.localStorageService.updateItem(this.i,this.currentPost )
+    }
+    this.router.navigate(['/'])
+  
   }
 
 
-  postForm = new FormGroup
-  ({
-    titre: new FormControl('',Validators.required),
-    description: new FormControl('',Validators.required),
-    categorie : new FormControl('',Validators.required),
-    date : new FormControl('',Validators.required),
-  })
- 
-  public unpost = {titre: this.titre, categorie: this.categorie, description: this.description ,
-    date : this.date}
-    
-  public addPost(){
-    this.unpost.categorie = this.postForm.controls.categorie.value
-    this.unpost.description = this.postForm.controls.description.value
-    this.unpost.titre = this.postForm.controls.titre.value
-    this.unpost.date = this.postForm.controls.date.value
-
-    this.postA = this.localStorageService.getData() || [];
-    console.log(this.postA );
-    this.postArray.push(this.postA)
-    console.log(this.postArray);
-    this.localStorageService.setItem('Posts',JSON.stringify(this.unpost))
-
-    this.lesposts = this.localStorageService.setItem('Posts',JSON.stringify(this.unpost)) 
-    //sconsole.log(this.localStorageService.setItem('Posts',JSON.stringify(this.unpost)) );
-
-    //const array = JSON.parse(this.localStorageService.getData(this.unpost));
- console.log(this.localStorageService.setItem('Posts',JSON.stringify(this.unpost)));
-  }
 }
