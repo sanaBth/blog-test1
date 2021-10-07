@@ -8,14 +8,17 @@ import { PostService } from '../service/post.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private localStorageService : PostService) { }
-
+  constructor(private _localStorageService : PostService) { }
+  public queryResult :any =[];
   public tablePost :any;
+  postA : any;
   ngOnInit(): void {
    //console.log(this.localStorageService.getData());
     //const tablePost = JSON.parse(this.localStorageService.getData());
-    const tablePost = this.localStorageService.getData();
-   console.log(tablePost);
+   // const result=JSON.parse(this._localStorageService.getData());
+   //this.postA = JSON.parse(this._localStorageService.getData('Posts')) ;
+   
+   console.log(this.postA);
    
   }
 
